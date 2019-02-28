@@ -1,7 +1,31 @@
-﻿
+﻿@model PokeList
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>List of Pokemons</h2>
 
+<table class="table-condensed table-striped">
+    <tr>
+        <th>No.</th>
+        <th>Name</th>
+    </tr>
+
+    @for (var i = 0; i < Model.results.Count(); i++)
+    {
+        <tr>
+            <td>@(ViewBag.StartNo + i)</td>
+            <td><a asp-action="Detail" asp-route-id="@Model.results.ElementAt(i).name">@Model.results.ElementAt(i).name.FirstCharToUpper()</a></td>
+        </tr>
+    }
+</table>
+
+@if (!string.IsNullOrEmpty(Model.previous))
+{
+    <a asp-route-path="@Model.previous" class="btn btn-primary">Prev</a>
+}
+
+@if (!string.IsNullOrEmpty(Model.next))
+{
+    <a asp-route-path="@Model.next" class="btn btn-primary">Next</a>
+}

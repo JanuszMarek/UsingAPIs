@@ -7,33 +7,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using UsingAPIs.Areas.Pokemons.Models;
+using UsingAPIs.Controllers;
 
 namespace UsingAPIs.Areas.Pokemons.Controllers
 {
     [Area(nameof(Pokemons))]
-    public class HomeController : Controller
+    public class HomeController : ExtendedController
     {
-        public IActionResult Index()
+        public IActionResult Index(string path = "https://pokeapi.co/api/v2/pokemon/")
         {
-            return View();
+            PokeList pokeList = APIRequest(path).ToObject<PokeList>();
+            ViewBag.StartNo = 0;
+
+            return View(pokeList);
         }
 
-        public IActionResult Detail()
+        public IActionResult Detail(string id = "1")
         {
-            //request
-            WebRequest request = WebRequest.Create("https://pokeapi.co/api/v2/pokemon/1/");
-            //response
-            WebResponse response = request.GetResponse();
-            //response stream
-            Stream stream = response.GetResponseStream();
-            //make it accessible
-            StreamReader reader = new StreamReader(stream);
-            //string - JSON
-            string responseFromServer = reader.ReadToEnd();
+            string path = $"https://pokeapi.co/api/v2/pokemon/{id}/";
 
-            JObject parsedString = JObject.Parse(responseFromServer);
-
-            Pokemon pokemon = parsedString.ToObject<Pokemon>();
+            Pokemon pokemon = APIRequest(path).ToObject<Pokemon>();
 
             return View(pokemon);
         }
