@@ -13,34 +13,17 @@
   <ItemGroup>
     <Folder Include="Areas\GIPHY\Data\" />
     <Folder Include="Areas\Pokemons\Data\" />
+    <Folder Include="Areas\Pokemons\Views\Shared\" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Update="Areas\GIPHY\Views\Shared\Error.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Areas\GIPHY\Views\Shared\_CookieConsentPartial.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\GIPHY\Views\Shared\_Layout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\GIPHY\Views\Shared\_ValidationScriptsPartial.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
     <Content Update="Areas\GIPHY\Views\_ViewImports.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\GIPHY\Views\_ViewStart.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Pokemons\Views\Shared\_CookieConsentPartial.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Pokemons\Views\Shared\_Layout.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-    <Content Update="Areas\Pokemons\Views\Shared\_ValidationScriptsPartial.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Areas\Pokemons\Views\_ViewImports.cshtml">

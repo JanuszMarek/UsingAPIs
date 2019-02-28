@@ -22,19 +22,24 @@ namespace UsingAPIs.Areas.GIPHY.Controllers
             _apiKey = options.Value.GIPHY;
         }
 
-        public IActionResult Index(string search = "")
+        public IActionResult Index(string search = "", int page = 1)
         {
-            ViewBag.Search = search;
-            var offset = "0";
-            string method = "search";
+            GifViewModel gifViewModel = new GifViewModel();
+            gifViewModel.Pagination.Search = search;
+            gifViewModel.Pagination.Page = page;
 
+            int pageSize = 20;
+
+            var offset = pageSize * page;
+
+            string method = "search";
             if(string.IsNullOrEmpty(search))
             {
                 method = "trending";
             }
 
             //request
-            WebRequest request = WebRequest.Create($"http://api.giphy.com/v1/gifs/{method}?api_key={_apiKey}&q={search}&offset={offset}");
+            WebRequest request = WebRequest.Create($"http://api.giphy.com/v1/gifs/{method}?api_key={_apiKey}&q={search}&offset={offset}&limit={pageSize}");
             //response
             WebResponse response = request.GetResponse();
             //response stream
@@ -46,9 +51,9 @@ namespace UsingAPIs.Areas.GIPHY.Controllers
 
             JObject parsedString = JObject.Parse(responseFromServer);
 
-            Gif gifs = parsedString.ToObject<Gif>();
+            gifViewModel.Gif = parsedString.ToObject<Gif>();
 
-            return View(gifs);
+            return View(gifViewModel);
         }
 
 

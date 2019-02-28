@@ -1,24 +1,31 @@
-﻿@model Gif
+﻿@model GifViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Your GIFs";
 }
 
-<h2>Twoje GIFy</h2>
+<h2>Your GIFs</h2>
 
-@if(!String.IsNullOrEmpty(ViewBag.Search))
+@if(!String.IsNullOrEmpty(Model.Pagination.Search))
 {
-    <h4>Gify z @ViewBag.Search</h4>
+    <h4>Gifs with @Model.Pagination.Search</h4>
 }
 
-<form >
+<form class="form-inline">
     <div class="input-group">
-        <input type="search" name="search" class="input-sm" placeholder="Search"/>
+        <input type="search" name="search" class="form-control" placeholder="Search" />
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+        </div>
     </div>
-
 </form>
+<br />
+<div class="row">
+    @foreach (var item in Model.Gif.data)
+    {
+        <div class="col-sm-6 col-md-4 col-lg-3">
+            <img src="@item.images.original.url" class="img-responsive"/>
+        </div>
+    }
+</div>
 
-
-@foreach(var item in Model.data)
-{
-    <img src="@item.images.original.url" />
-}
+@await Html.PartialAsync("_Pagination", Model.Pagination)

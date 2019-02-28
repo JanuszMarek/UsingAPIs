@@ -303,6 +303,7 @@ namespace UsingAPIs.Areas.GIPHY.Models
         public int total_count { get; set; }
         public int count { get; set; }
         public int offset { get; set; }
+        public string Search { get; internal set; }
     }
 
     public class Meta

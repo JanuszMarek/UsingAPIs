@@ -1,0 +1,46 @@
+﻿@model PaginationClass
+
+<div class="pagination">
+    @if (Model.Page > 1)
+    {
+        var parms = new Dictionary<string, string>
+        {
+            { "search", Model.Search },
+            { "page", (Model.Page-1).ToString() }
+        };
+    <span><a asp-all-route-data="parms" class="btn btn-primary">Prev</a></span>
+    }
+
+    @if ((Model.Page + 2) > 5)
+    {
+        var parms = new Dictionary<string, string>
+        {
+            { "search", Model.Search },
+            { "page", "1" }
+        };
+        <span><a asp-all-route-data="parms" class="btn btn-default">1</a></span>
+        <span>...</span>
+    }
+
+    @for (int i = (Model.Page - 2) > 1 ? (Model.Page - 2) : 1; i <= ((Model.Page + 2) > 5 ? (Model.Page + 2) : 5); i++)
+    {
+        var parms = new Dictionary<string, string>
+        {
+            { "search", Model.Search },
+            { "page", i.ToString() }
+        };
+
+        var classvalue = i == Model.Page ? "btn btn-primary" : "btn btn-default";
+        <span><a asp-all-route-data="parms" class="@classvalue">@i</a></span>
+    }
+
+    @{
+        var parm = new Dictionary<string, string>
+        {
+            { "search", Model.Search },
+            { "page", (Model.Page+1).ToString() }
+        };
+    }
+    <span><a asp-all-route-data="parm" class="btn btn-primary">Next</a></span>
+
+</div>
