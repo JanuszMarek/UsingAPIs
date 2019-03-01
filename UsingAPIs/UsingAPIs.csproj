@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Areas\GIPHY\Data\" />
     <Folder Include="Areas\Pokemons\Data\" />
-    <Folder Include="Areas\Pokemons\Views\Shared\" />
   </ItemGroup>
 
   <ItemGroup>

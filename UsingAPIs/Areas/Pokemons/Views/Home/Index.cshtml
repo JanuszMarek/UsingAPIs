@@ -1,31 +1,36 @@
-﻿@model PokeList
+﻿@model PokeListViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>List of Pokemons</h2>
+<h2>List of Pokemons <img style="width:50px;height:50px;" src="~/images/pokeball.png" /></h2>
 
-<table class="table-condensed table-striped">
-    <tr>
-        <th>No.</th>
-        <th>Name</th>
-    </tr>
-
-    @for (var i = 0; i < Model.results.Count(); i++)
+<div>
+    @foreach (var item in Model.Pokemons)
     {
-        <tr>
-            <td>@(ViewBag.StartNo + i)</td>
-            <td><a asp-action="Detail" asp-route-id="@Model.results.ElementAt(i).name">@Model.results.ElementAt(i).name.FirstCharToUpper()</a></td>
-        </tr>
+        <a asp-action="Detail" asp-route-id="@item.name" class="pokelink">
+            <div class="col-sm-4 nopadding">
+                <div class="pokediv container-fluid nopadding">
+
+                    <div class="col-xs-4 nopadding">
+                        <img src="@item.sprites.front_default" class="img-responsive" />
+                    </div>
+
+                    <div class="col-xs-8 centerhor">
+                        @item.name.FirstCharToUpper()
+                        <span>
+                            @foreach (var type in item.types)
+                            {
+                                <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </a>
     }
-</table>
+    <div class="clearfix"></div>
+    @await Html.PartialAsync("_Pagination", Model.Pagination)
 
-@if (!string.IsNullOrEmpty(Model.previous))
-{
-    <a asp-route-path="@Model.previous" class="btn btn-primary">Prev</a>
-}
-
-@if (!string.IsNullOrEmpty(Model.next))
-{
-    <a asp-route-path="@Model.next" class="btn btn-primary">Next</a>
-}
+</div>
+<div class="clearfix"></div>

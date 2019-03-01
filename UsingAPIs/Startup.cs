@@ -61,6 +61,12 @@ namespace UsingAPIs
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "areas2",
+                    template: "{area:exists}/{action=Index}/{id?}",
+                    defaults: new {controller = "Home"}
+                );
+
+                routes.MapRoute(
                     name: "areas",
                     template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );

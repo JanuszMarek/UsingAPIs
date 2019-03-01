@@ -1,5 +1,31 @@
 ﻿@model PaginationClass
 
+@{ 
+    int start = 1;
+    if ((Model.Page - 2) > 1)
+    {
+        start = Model.Page - 2;
+    }
+
+    int limit = 5;
+    if (Model.Limit > 0 && Model.Limit < 5)
+    {
+        limit = Model.Limit;
+    }
+
+    if((Model.Page + 2) > 5)
+    {
+        limit = Model.Page + 2;
+
+        if (Model.Limit > 0 && (Model.Page + 2) > Model.Limit)
+        {
+            limit = Model.Limit;
+        }
+    }
+
+
+}
+
 <div class="pagination">
     @if (Model.Page > 1)
     {
@@ -11,7 +37,7 @@
     <span><a asp-all-route-data="parms" class="btn btn-primary">Prev</a></span>
     }
 
-    @if ((Model.Page + 2) > 5)
+    @if ((Model.Page + 2) > 5) 
     {
         var parms = new Dictionary<string, string>
         {
@@ -22,7 +48,9 @@
         <span>...</span>
     }
 
-    @for (int i = (Model.Page - 2) > 1 ? (Model.Page - 2) : 1; i <= ((Model.Page + 2) > 5 ? (Model.Page + 2) : 5); i++)
+
+
+    @for (int i = (Model.Page - 2) > 1 ? (Model.Page - 2) : 1; i <= limit ; i++)
     {
         var parms = new Dictionary<string, string>
         {
@@ -34,13 +62,14 @@
         <span><a asp-all-route-data="parms" class="@classvalue">@i</a></span>
     }
 
-    @{
-        var parm = new Dictionary<string, string>
+    @if(Model.Page < Model.Limit || Model.Limit == 0)
+    {
+        var parms = new Dictionary<string, string>
         {
             { "search", Model.Search },
             { "page", (Model.Page+1).ToString() }
         };
+        <span><a asp-all-route-data="parms" class="btn btn-primary">Next</a></span>
     }
-    <span><a asp-all-route-data="parm" class="btn btn-primary">Next</a></span>
 
 </div>

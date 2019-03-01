@@ -3,8 +3,16 @@
 @{
     ViewData["Title"] = "Detail";
 }
+<div class="well margintop10">
+    <h4 class="text-center">@Model.name.FirstCharToUpper() <small>No. @Model.id </small></h4>
+</div>
 
-<h2>Detail</h2>
+<table>
+    <tr>
+        <td></td>
+    </tr>
 
+</table>
 <img src="@Model.sprites.front_default" />
-<p>@Model.name</p>
+<img src="@Model.sprites.front_female" />
+<img src="@Model.sprites.front_shiny" /> 
