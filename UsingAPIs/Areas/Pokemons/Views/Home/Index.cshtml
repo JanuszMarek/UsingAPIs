@@ -5,33 +5,9 @@
 
 <h2>List of Pokemons <img style="width:50px;height:50px;" src="~/images/pokeball.png" /></h2>
 
-<div>
-    @for (int i=(Model.Pagination.Page-1)*Model.Pagination.PageSize; i< ((Model.Pagination.Page - 1) * Model.Pagination.PageSize) + Model.Pagination.PageSize; i++)
-    {
-        var item = Model.Pokemons.ElementAt(i);
-        <a asp-action="Detail" asp-route-id="@item.name" class="pokelink">
-            <div class="col-sm-4 nopadding">
-                <div class="pokediv container-fluid nopadding">
-
-                    <div class="col-xs-4 nopadding">
-                        <img src="@item.sprites.front_default" class="img-responsive" />
-                    </div>
-
-                    <div class="col-xs-8 centerhor">
-                        @item.name.FirstCharToUpper()
-                        <span>
-                            @foreach (var type in item.types)
-                            {
-                                <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
-                            }
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </a>
-    }
-    <div class="clearfix"></div>
-    @await Html.PartialAsync("_Pagination", Model.Pagination)
-
-</div>
+<form data-ajax="true" data-ajax-method="POST" data-ajax->
+    <div id="ajaxRequest">
+        @await Html.PartialAsync("_PokeListing", Model)
+    </div>
+</form>
 <div class="clearfix"></div>
