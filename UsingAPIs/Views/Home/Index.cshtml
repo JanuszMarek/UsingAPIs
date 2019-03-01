@@ -1,7 +1,42 @@
 ﻿
 @{
     ViewData["Title"] = "Index";
+
+    Dictionary<string, string> APIS = new Dictionary<string, string>
+    {
+        { "https://pokeapi.co/", "/images/pokeapi.png" },
+        { "https://developers.giphy.com/" , "/images/giphy.png" },
+        { "https://developers.google.com/youtube/v3/" , "/images/ytapi.jpg" }
+    };
 }
 
-<h2>Index</h2>
+<h2 class="page-header">UsingAPIs Application</h2>
 
+<h4>In this project I'm using this APIs:</h4>
+<div class="row">
+    @foreach (var dict in APIS)
+    {
+    
+        <div class="col-xs-3" style="height: 150px;">
+            <a href="@dict.Key">
+                <img src="@dict.Value" class="img-responsive"/>
+            </a>
+        </div>
+    
+    }
+
+</div>
+
+<div class="row">
+    <h5>To work propertly You have to insert <i>api_keys.json</i> file to root folder with your API_Keys</h5>
+    <code>
+        {
+        "APIKeys": {
+        "GIPHY": "{Your API Key}",
+        "YouTube": "{Your API Key}"
+        }
+        }
+    </code>
+</div>
+
+<div class="clearfix"></div>

@@ -41,6 +41,29 @@ body {
     padding: 0;
 }
 
-.margintop10{
+.margintop10 {
     margin-top: 10px;
 }
+
+.padding5 {
+    padding: 5px;
+}
+
+.youtubediv {
+    width: 285px;
+    height: 250px;
+    margin: 2px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.youtubediv a {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+    .youtubediv a:link {
+        text-decoration: none;
+    }

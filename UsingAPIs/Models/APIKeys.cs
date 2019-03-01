@@ -8,5 +8,6 @@ namespace UsingAPIs.Models
     public class APIKeys
     {
         public string GIPHY { get; set; }
+        public string YouTube { get; set; }
     }
 }
