@@ -26,7 +26,7 @@
             <div class="youtubediv">
                 <a href="@link">
                     <img src="@item.snippet.thumbnails.medium.url" class="img-responsive" />
-                    <div class="padding5">@item.snippet.title.Normalize()</div>
+                    <div class="padding5">@Html.Raw(item.snippet.title)</div>
                 </a>
             </div>
         </div>

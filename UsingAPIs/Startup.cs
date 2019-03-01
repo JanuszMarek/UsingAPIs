@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UsingAPIs.Areas.Pokemons.Models;
 using UsingAPIs.Models;
 
 namespace UsingAPIs
@@ -37,6 +38,7 @@ namespace UsingAPIs
             });
             services.Configure<APIKeys>(Configuration.GetSection("APIKeys"));
 
+            services.AddSingleton<IPokeRepository, PokeRepository>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             
         }

@@ -8,7 +8,7 @@ namespace UsingAPIs.Areas.Pokemons.Models
 {
     public class PokeListViewModel
     {
-        public List<Pokemon> Pokemons { get; set; }
+        public IEnumerable<Pokemon> Pokemons { get; set; }
 
         public PaginationClass Pagination { get; set; }
 

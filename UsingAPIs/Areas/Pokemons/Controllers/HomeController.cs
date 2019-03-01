@@ -14,31 +14,42 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
     [Area(nameof(Pokemons))]
     public class HomeController : ExtendedController
     {
+        private IPokeRepository repository;
+
+        public HomeController(IPokeRepository pokeRepository)
+        {
+            repository = pokeRepository;
+        }
+
+
         public IActionResult Index(int page = 1)
         {
-            const int POKECOUNT = 807;
             const int PAGESIZE = 21;
 
             PokeListViewModel pokeListViewModel = new PokeListViewModel();
             pokeListViewModel.Pagination = new UsingAPIs.Models.PaginationClass();
-            pokeListViewModel.Pagination.Limit = (int)Math.Ceiling((double)POKECOUNT / PAGESIZE);
-            pokeListViewModel.Pagination.PageSize = (page * PAGESIZE) > POKECOUNT ? PAGESIZE - ((pokeListViewModel.Pagination.Limit * PAGESIZE) - POKECOUNT) : PAGESIZE;
+            pokeListViewModel.Pagination.Limit = (int)Math.Ceiling((double)repository.PokeCount / PAGESIZE);
+            pokeListViewModel.Pagination.PageSize = 21;
+
+            //pokeListViewModel.Pagination.PageSize = (page * PAGESIZE) > repository.PokeCount ? PAGESIZE - ((pokeListViewModel.Pagination.Limit * PAGESIZE) - repository.PokeCount) : PAGESIZE;
             pokeListViewModel.Pagination.Page = page < pokeListViewModel.Pagination.Limit ? page : pokeListViewModel.Pagination.Limit;
 
             int offset = PAGESIZE * (pokeListViewModel.Pagination.Page - 1);
 
-            string path = $"https://pokeapi.co/api/v2/pokemon/?offset={offset}&limit={pokeListViewModel.Pagination.PageSize}";
-            PokeList pokeList = APIRequest(path).ToObject<PokeList>();
-
+            //string path = $"https://pokeapi.co/api/v2/pokemon/?offset={offset}&limit={pokeListViewModel.Pagination.PageSize}";
+            //PokeList pokeList = APIRequest(path).ToObject<PokeList>();
+            pokeListViewModel.Pokemons = repository.Pokemons;
+            /*
             pokeListViewModel.Pokemons = new List<Pokemon>();
             foreach(var item in pokeList.results)
             {
                 pokeListViewModel.Pokemons.Add(APIRequest(item.url).ToObject<Pokemon>());
             }
-
+            */
             return View(pokeListViewModel);
         }
-
+        
+        
         
         public IActionResult Detail(string id = "1")
         {
