@@ -8,7 +8,7 @@
             <div class="pokediv container-fluid nopadding">
 
                 <div class="col-xs-4 nopadding">
-                    <img src="@item.sprites.front_default" class="img-responsive" />
+                    <img src="@item.sprites.front_default" name="page" class="img-responsive" />
                 </div>
 
                 <div class="col-xs-8 centerhor">
@@ -25,5 +25,5 @@
     </a>
 }
 <div class="clearfix"></div>
-@await Html.PartialAsync("_PokePagination", Model.Pagination)
+
 

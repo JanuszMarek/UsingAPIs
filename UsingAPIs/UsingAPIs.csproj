@@ -38,7 +38,7 @@
     <Content Update="Areas\YouTube\Views\_ViewStart.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Views\Shared\_PokePagination.cshtml">
+    <Content Update="Areas\Pokemons\Views\Shared\_PokePagination.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Views\Shared\_Pagination.cshtml">

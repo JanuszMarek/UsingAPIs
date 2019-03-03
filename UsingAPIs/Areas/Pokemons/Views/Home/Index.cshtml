@@ -5,9 +5,18 @@
 
 <h2>List of Pokemons <img style="width:50px;height:50px;" src="~/images/pokeball.png" /></h2>
 
-<form data-ajax="true" data-ajax-method="POST" data-ajax->
+<!--<form data-ajax="true" data-ajax-method="GET" data-ajax-mode="replace" data-ajax-update="#ajaxRequest" id="ajaxform">-->
+<form id="ajaxform" asp-action="Index">
+    <input type="hidden" value="@Model.Pagination.Page" name="page" id="page"/>
     <div id="ajaxRequest">
         @await Html.PartialAsync("_PokeListing", Model)
     </div>
 </form>
 <div class="clearfix"></div>
+
+@await Html.PartialAsync("_Pagination", Model.Pagination)
+
+@section Scripts
+    {
+    <script src="~/lib/jquery-ajax-unobtrusive/src/jquery.unobtrusive-ajax.js"></script>
+}

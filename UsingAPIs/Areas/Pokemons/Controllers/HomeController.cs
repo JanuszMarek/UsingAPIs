@@ -21,7 +21,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
             repository = pokeRepository;
         }
 
-
+        
         public IActionResult Index(int page = 1)
         {
             const int PAGESIZE = 21;
@@ -46,6 +46,13 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
                 pokeListViewModel.Pokemons.Add(APIRequest(item.url).ToObject<Pokemon>());
             }
             */
+            bool isAjaxCall = HttpContext.Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            
+            if (isAjaxCall)
+            {
+                return PartialView("_PokeListing");
+            }
+
             return View(pokeListViewModel);
         }
         

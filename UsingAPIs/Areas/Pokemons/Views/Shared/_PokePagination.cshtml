@@ -1,0 +1,54 @@
+﻿@model PaginationClass
+
+@{ 
+    int start = 1;
+    if ((Model.Page - 2) > 1)
+    {
+        start = Model.Page - 2;
+    }
+
+    int limit = 5;
+    if (Model.Limit > 0 && Model.Limit < 5)
+    {
+        limit = Model.Limit;
+    }
+
+    if((Model.Page + 2) > 5)
+    {
+        limit = Model.Page + 2;
+
+        if (Model.Limit > 0 && (Model.Page + 2) > Model.Limit)
+        {
+            limit = Model.Limit;
+        }
+    }
+
+
+}
+
+<div class="pagination">
+    @if (Model.Page > 1)
+    {
+    <span><btn onclick="ChangePageValue(this)" class="btn btn-primary">Prev</btn></span>
+    }
+
+    @if ((Model.Page + 2) > 5) 
+    {
+        <span><btn onclick="ChangePageValue(this)" class="btn btn-default">1</btn></span>
+        <span>...</span>
+    }
+
+
+
+    @for (int i = (Model.Page - 2) > 1 ? (Model.Page - 2) : 1; i <= limit ; i++)
+    {
+        var classvalue = i == Model.Page ? "btn btn-primary" : "btn btn-default";
+        <span><btn onclick="ChangePageValue(this)" class="@classvalue">@i</btn></span>
+    }
+
+    @if(Model.Page < Model.Limit || Model.Limit == 0)
+    {
+        <span><btn onclick="ChangePageValue(this)" class="btn btn-primary">Next</btn></span>
+    }
+
+</div>
