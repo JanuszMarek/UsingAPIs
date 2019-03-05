@@ -7,8 +7,8 @@ namespace UsingAPIs.Areas.Pokemons.Models
 {
     public interface IPokeRepository
     {
-        IEnumerable<Pokemon> Pokemons { get; }
-        Pokemon this[string id] { get; }
+        
+        Pokemon this[string name] { get; }
         int PokeCount { get; }
     }
 }

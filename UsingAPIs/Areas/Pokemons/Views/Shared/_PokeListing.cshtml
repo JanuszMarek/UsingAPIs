@@ -1,28 +1,28 @@
 ﻿@model PokeListViewModel
-
-@for (int i = (Model.Pagination.Page - 1) * Model.Pagination.PageSize; i < ((Model.Pagination.Page - 1) * Model.Pagination.PageSize) + Model.Pagination.PageSize; i++)
+<!--for (int i = (Model.Pagination.Page - 1) * Model.Pagination.PageSize; i < ((Model.Pagination.Page - 1) * Model.Pagination.PageSize) + Model.Pagination.PageSize; i++)-->
+@foreach(var item in Model.Pokemons)
 {
-    var item = Model.Pokemons.ElementAt(i);
+    //var item = Model.Pokemons.ElementAt(i);
     <a asp-action="Detail" asp-route-id="@item.name" class="pokelink">
-        <div class="col-sm-4 nopadding">
-            <div class="pokediv container-fluid nopadding">
+    <div class="col-sm-4 nopadding">
+        <div class="pokediv container-fluid nopadding">
 
-                <div class="col-xs-4 nopadding">
-                    <img src="@item.sprites.front_default" name="page" class="img-responsive" />
-                </div>
+            <div class="col-xs-4 nopadding">
+                <img src="@item.sprites.front_default" name="page" class="img-responsive" />
+            </div>
 
-                <div class="col-xs-8 centerhor">
-                    @item.name.FirstCharToUpper()
-                    <span>
-                        @foreach (var type in item.types)
-                        {
-                            <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
-                        }
-                    </span>
-                </div>
+            <div class="col-xs-8 centerhor">
+                @item.name.FirstCharToUpper()
+                <span>
+                    @foreach (var type in item.types)
+                    {
+                        <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
+                    }
+                </span>
             </div>
         </div>
-    </a>
+    </div>
+</a>
 }
 <div class="clearfix"></div>
 

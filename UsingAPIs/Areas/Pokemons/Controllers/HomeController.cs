@@ -38,7 +38,15 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
             //string path = $"https://pokeapi.co/api/v2/pokemon/?offset={offset}&limit={pokeListViewModel.Pagination.PageSize}";
             //PokeList pokeList = APIRequest(path).ToObject<PokeList>();
-            pokeListViewModel.Pokemons = repository.Pokemons;
+
+            pokeListViewModel.Pokemons = new List<Pokemon>();
+
+            for (int i = (pokeListViewModel.Pagination.Page - 1) * pokeListViewModel.Pagination.PageSize; i < ((pokeListViewModel.Pagination.Page - 1) * pokeListViewModel.Pagination.PageSize) + pokeListViewModel.Pagination.PageSize; i++)
+            {
+                pokeListViewModel.Pokemons.Add(repository[(i+1).ToString()]);
+            }
+            
+                //pokeListViewModel.Pokemons = repository.Pokemons;
             /*
             pokeListViewModel.Pokemons = new List<Pokemon>();
             foreach(var item in pokeList.results)
@@ -55,9 +63,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
             return View(pokeListViewModel);
         }
-        
-        
-        
+
         public IActionResult Detail(string id = "1")
         {
             string path = $"https://pokeapi.co/api/v2/pokemon/{id}/";
