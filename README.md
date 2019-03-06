@@ -11,13 +11,13 @@
 * [Contact](#contact)
 
 ## General info
-Project use three third-part APIs like PokÈAPI, GIPHY API and YouTube Data API. 
-PokÈAPI is a RESTful PokÈmon API. This API deliver information on PokÈmon, their moves, abilities, types, egg groups and much, much more.
-GIPHY's GIF library is the largest library of GIFs from across the entire internet.
-Thanks to YouTube Data API developers can add YouTube functionality to their sites. 
-<br>
-GIPHY and YouTube sections in my web site provides search bar for search a content from APIs e.g. user can search for "funny cats" and he will get search results of GIFs with cats (in GIPHY section) and videos with cats (in YouTube section) which are linked to YouTube page.
-Pokemon section contain list of all pokemons (with filtration in future) and details page of Pokemon with data from API.
+Project use three third-part APIs like Pok√©API, GIPHY API and YouTube Data API. 
+<br>Pok√©API is a RESTful Pok√©mon API. This API deliver information on Pok√©mon, their moves, abilities, types, egg groups and much, much more.
+<br>GIPHY's GIF library is the largest library of GIFs from across the entire internet.
+<br>Thanks to YouTube Data API developers can add YouTube functionality to their sites. 
+<br><br>
+GIPHY and YouTube sections in my web site provides search bar for search a content from APIs e.g. user can search for "funny cats" and he will get search results of GIFs with cats (in GIPHY section) and videos with cats (in YouTube section) which are linked to YouTube page with this videos.
+<br>Pokemon section contain list of all pokemons (with filtration in the future) and details page of Pokemon with data from API.
 In the future I want to add 4th API for Google Calendar with reading events of current day and possibility to add new events.
 
 ## Technologies
@@ -37,11 +37,12 @@ To do:
 - Pokemon - filtration of Pokemons, detail view of Pokemon
 - add new API - Google Calendar with reading events of current day and possibility to add new events.
 
-##Solved problems
+## Solved problems
 Getting data from PokemonAPI - my first concept was to get data from API for every request but I found this to be inefficient. I created then repository with Singleton object. In constructor I was getting data of all Pokemon (807 at this moment), it caused very long response time on first request. My final solution is checking if requested Pokemon data already exist in repository. If not data is getting from API and added to repository.
 
-##Setup
-For proper applications working You have to insert __api_keys.json__ file to root folder with your API keys.
+## Setup
+For proper application work You have to insert __api_keys.json__ file to root folder with your API keys.
+<br>
 Structure of file:
 ```
 { "APIKeys": { "GIPHY": "{Your API Key}", "YouTube": "{Your API Key}" } }
