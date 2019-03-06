@@ -22,6 +22,15 @@
        text-decoration: none;
     }
 
+.stat-table {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+.stat-table span{
+    margin-left: 10px;
+}
 /* BADGES */
 
 .badge-normal {

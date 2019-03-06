@@ -7,12 +7,104 @@
     <h4 class="text-center">@Model.name.FirstCharToUpper() <small>No. @Model.id </small></h4>
 </div>
 
-<table>
-    <tr>
-        <td></td>
-    </tr>
+<div class="text-center">
+    @if (!string.IsNullOrEmpty(Model.sprites.front_default))
+    {
+        string titlestr = "Default appearance";
+        if (!string.IsNullOrEmpty(Model.sprites.front_female))
+        {
+            titlestr = "Male appearance";
+        }
+        <img src="@Model.sprites.front_default" data-toggle="tooltip" title="@titlestr" />
+    }
+    @if (!string.IsNullOrEmpty(Model.sprites.front_female))
+    {
+        <img src="@Model.sprites.front_female" data-toggle="tooltip" title="Female appearance" />
+    }
+    @if (!string.IsNullOrEmpty(Model.sprites.front_shiny))
+    {
+        string titlestr = "Shiny appearance";
+        if (!string.IsNullOrEmpty(Model.sprites.front_shiny_female))
+        {
+            titlestr = "Shiny male appearance";
+        }
+        <img src="@Model.sprites.front_shiny" data-toggle="tooltip" title="@titlestr" />
+    }
+    @if (!string.IsNullOrEmpty(Model.sprites.front_shiny_female))
+    {
+        <img src="@Model.sprites.front_shiny_female" data-toggle="tooltip" title="Shiny female appearance" />
+    }
 
-</table>
-<img src="@Model.sprites.front_default" />
-<img src="@Model.sprites.front_female" />
-<img src="@Model.sprites.front_shiny" /> 
+</div>
+
+<div class="text-center col-xs-6">
+
+    <table class="table table-striped table-responsive">
+        <tr>
+            <td>Name</td>
+            <td>@Model.name.FirstCharToUpper()</td>
+        </tr>
+        <tr>
+            <td>Types</td>
+            <td>
+                @foreach (var type in Model.types)
+                {
+                    <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Abilities</td>
+            <td>
+                @foreach (var ability in Model.abilities)
+                {
+                    <span>@ability.ability.name.FirstCharToUpper()</span>
+
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>Height</td>
+            <td>@Model.height.HeightToString()</td>
+        </tr>
+        <tr>
+            <td>Wieght</td>
+            <td>@Model.weight.WeightToString()</td>
+        </tr>
+        <tr>
+            <td>Base stats</td>
+            <td>
+                <table class="stat-table">
+                    <tr><td>Experience:</td><td><span>@Model.base_experience</span></td></tr>
+                    @foreach (var stat in Model.stats)
+                    {
+                        <tr><td>@stat.stat.name.FirstCharToUpper():</td><td><span>@stat.base_stat</span></td></tr>
+                    }
+                </table>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div class="text-center col-xs-6">
+    <div class="panel panel-default panel-collapse">
+        <div class="panel-heading">Moves</div>
+
+        <div class="panel-body">
+            @foreach (var move in Model.moves)
+            {
+                <div>@move.move.name.FirstCharToUpper()</div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+}
