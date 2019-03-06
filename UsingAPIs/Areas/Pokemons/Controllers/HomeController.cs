@@ -72,6 +72,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
             if (pokeDetail.Pokemon != null)
             {
                 pokeDetail.PokeMoves = new List<Models.PokemonMove.PokeMove>();
+                //MOVES
                 pokeDetail.Pokemon.moves.OrderBy(p => p.version_group_details.First().level_learned_at);
                 foreach(var move in pokeDetail.Pokemon.moves)
                 {
@@ -79,8 +80,13 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
                     {
                         pokeDetail.PokeMoves.Add(repository.PokeMove(move.move.name,move.move.url));
                     }
-                    pokeDetail.PokeMoves.OrderBy(p=>p.);
                 }
+
+                //SPECIES
+                pokeDetail.PokeSpecies = repository.PokeSpecies(pokeDetail.Pokemon.species.name, pokeDetail.Pokemon.species.url);
+
+                //EVOLUTION
+                pokeDetail.EvolutionChain = repository.EvolutionChain(pokeDetail.PokeSpecies.evolution_chain.url);
                 return View(pokeDetail);
             }  
             else

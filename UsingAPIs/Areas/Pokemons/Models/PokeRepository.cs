@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using UsingAPIs.Areas.Pokemons.Models.PokemonEvolution;
 using UsingAPIs.Areas.Pokemons.Models.PokemonMove;
+using UsingAPIs.Areas.Pokemons.Models.PokemonSpecies;
 using UsingAPIs.Controllers;
 
 namespace UsingAPIs.Areas.Pokemons.Models
@@ -15,7 +16,8 @@ namespace UsingAPIs.Areas.Pokemons.Models
         //PRIVATE
         private List<Pokemon> pokemons;
         private List<PokeMove> pokeMoves;
-        private List<PokeEvolutionChain> evolutionChains;
+        private List<PokeSpecies> pokeSpecies;
+        private Dictionary<string,PokeEvolutionChain> evolutionChains;
 
         //PUBLIC
         public int PokeCount => 807;
@@ -58,12 +60,36 @@ namespace UsingAPIs.Areas.Pokemons.Models
             return pokeMove;   
         }
         
+        public PokeSpecies PokeSpecies(string name, string path)
+        {
+            bool isNew = false;
+            PokeSpecies pokeSpec = CheckGetRepo<PokeSpecies>(pokeSpecies.FirstOrDefault(p => p.name == name), path, out isNew);
+            if (isNew)
+            {
+                pokeSpecies.Add(pokeSpec);
+            }
+            return pokeSpec;
+        }
+
+        public PokeEvolutionChain EvolutionChain(string path)
+        {
+            
+            bool isNew = false;
+            PokeEvolutionChain pokeEvolution  = CheckGetRepo<PokeEvolutionChain>(evolutionChains.ContainsKey(path) ? evolutionChains[path] : null, path, out isNew);
+            if (isNew)
+            {
+                evolutionChains.Add(path, pokeEvolution);
+            }
+            return pokeEvolution;
+        }
+        
         //CONSTRUCTOR
         public PokeRepository()
         {
             pokemons = new List<Pokemon>();
             pokeMoves = new List<PokeMove>();
-            evolutionChains = new List<PokeEvolutionChain>();
+            pokeSpecies = new List<PokeSpecies>();
+            evolutionChains = new Dictionary<string, PokeEvolutionChain>();
         }
 
         //METHODS
