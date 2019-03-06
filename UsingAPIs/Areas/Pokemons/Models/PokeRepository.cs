@@ -12,7 +12,7 @@ namespace UsingAPIs.Areas.Pokemons.Models
     { 
         //PRIVATE
         private List<Pokemon> pokemons;
-        private PokeList pokeList;
+        //private PokeList pokeList;
 
         //PUBLIC
         public int PokeCount => 807;
@@ -24,29 +24,41 @@ namespace UsingAPIs.Areas.Pokemons.Models
                 int id;
                 if(int.TryParse(name, out id))
                 {
-                    var pok = pokemons.FirstOrDefault(p => p.id == id);
-                    if (pok != null)
+                    Pokemon pokemon = pokemons.FirstOrDefault(p => p.id == id);
+                    if (pokemon != null)
                     {
-                        return pok;
+                        return pokemon;
                     }
                     else
                     {
-                        var searchname = pokeList.results.ElementAt(id-1).name;
-                        pokemons.Add(GetPokemonAsync(searchname).Result);
-                        return pokemons.FirstOrDefault(p => p.name == searchname);
+
+                        var result = GetPokemonAsync(id.ToString());
+                        if (result.Result != null)
+                        {
+                            pokemons.Add(result.Result);
+                            return pokemons.FirstOrDefault(p => p.id == id);
+                        }
+                        else
+                            return null;
                     }
                 }
                 else
                 {
-                    var pok = pokemons.FirstOrDefault(p => p.name == name);
-                    if (pok != null)
+                    Pokemon pokemon = pokemons.FirstOrDefault(p => p.name == name);
+                    if (pokemon != null)
                     {
-                        return pok;
+                        return pokemon;
                     }
                     else
                     {
-                        pokemons.Add(GetPokemonAsync(name).Result);
-                        return pokemons.FirstOrDefault(p => p.name == name);
+                        var result = GetPokemonAsync(name);
+                        if (result.Result != null)
+                        {
+                            pokemons.Add(result.Result);
+                            return pokemons.FirstOrDefault(p => p.name == name);
+                        }
+                        else
+                            return null;
                     }
                 }
 
@@ -56,13 +68,14 @@ namespace UsingAPIs.Areas.Pokemons.Models
         //CONSTRUCTOR
         public PokeRepository()
         {
-            pokeList = GetPokeListAsync($"https://pokeapi.co/api/v2/pokemon?offset=0&limit={PokeCount}").Result;
+            //pokeList = GetPokeListAsync($"https://pokeapi.co/api/v2/pokemon?offset=0&limit={PokeCount}").Result;
             pokemons = new List<Pokemon>();
             //pokemons = GetAllAsync().Result;
 
         }
 
         //METHODS
+        /*
         private async Task<PokeList> GetPokeListAsync(string path)
         {
             var client = new HttpClient();
@@ -73,14 +86,19 @@ namespace UsingAPIs.Areas.Pokemons.Models
             var stringResult = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<PokeList>(stringResult);
         }
+        */
 
         private async Task<Pokemon> GetPokemonAsync(string name)
         {
             var client = new HttpClient();
             var response = await client.GetAsync($"https://pokeapi.co/api/v2/pokemon/{name}");
-            response.EnsureSuccessStatusCode();
-            var stringResult = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Pokemon>(stringResult);
+            if(response.IsSuccessStatusCode)
+            {
+                var stringResult = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Pokemon>(stringResult);
+            }
+            return null;
+            
 
             /*
             for (int i = 0; i < 807; i++)

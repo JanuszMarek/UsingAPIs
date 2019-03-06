@@ -66,11 +66,14 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
         public IActionResult Detail(string id = "1")
         {
-            string path = $"https://pokeapi.co/api/v2/pokemon/{id}/";
+            //string path = $"https://pokeapi.co/api/v2/pokemon/{id}/";
+            //Pokemon pokemon = APIRequest(path).ToObject<Pokemon>();
 
-            Pokemon pokemon = APIRequest(path).ToObject<Pokemon>();
-
-            return View(pokemon);
+            Pokemon pokemon = repository[id];
+            if (pokemon != null)
+                return View(pokemon);
+            else
+                return View("NotFound404");
         }
     }
 }
