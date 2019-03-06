@@ -129,5 +129,7 @@ namespace UsingAPIs.Areas.Pokemons.Models
         public List<Stat> stats { get; set; }
         public List<Type> types { get; set; }
         public int weight { get; set; }
+
+        public static string ApiName => "pokemon";
     }
 }

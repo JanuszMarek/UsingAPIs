@@ -29,19 +29,19 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
             PokeListViewModel pokeListViewModel = new PokeListViewModel();
             pokeListViewModel.Pagination = new UsingAPIs.Models.PaginationClass();
             pokeListViewModel.Pagination.Limit = (int)Math.Ceiling((double)repository.PokeCount / PAGESIZE);
-            pokeListViewModel.Pagination.PageSize = 21;
+            pokeListViewModel.Pagination.PageSize = page < pokeListViewModel.Pagination.Limit ? PAGESIZE : repository.PokeCount - ((pokeListViewModel.Pagination.Limit-1) * PAGESIZE);
 
             //pokeListViewModel.Pagination.PageSize = (page * PAGESIZE) > repository.PokeCount ? PAGESIZE - ((pokeListViewModel.Pagination.Limit * PAGESIZE) - repository.PokeCount) : PAGESIZE;
             pokeListViewModel.Pagination.Page = page < pokeListViewModel.Pagination.Limit ? page : pokeListViewModel.Pagination.Limit;
 
-            int offset = PAGESIZE * (pokeListViewModel.Pagination.Page - 1);
+            //int offset = PAGESIZE * (pokeListViewModel.Pagination.Page - 1);
 
             //string path = $"https://pokeapi.co/api/v2/pokemon/?offset={offset}&limit={pokeListViewModel.Pagination.PageSize}";
             //PokeList pokeList = APIRequest(path).ToObject<PokeList>();
 
             pokeListViewModel.Pokemons = new List<Pokemon>();
 
-            for (int i = (pokeListViewModel.Pagination.Page - 1) * pokeListViewModel.Pagination.PageSize; i < ((pokeListViewModel.Pagination.Page - 1) * pokeListViewModel.Pagination.PageSize) + pokeListViewModel.Pagination.PageSize; i++)
+            for (int i = (pokeListViewModel.Pagination.Page - 1) * PAGESIZE; i < ((pokeListViewModel.Pagination.Page - 1) * PAGESIZE) + pokeListViewModel.Pagination.PageSize; i++)
             {
                 pokeListViewModel.Pokemons.Add(repository[(i+1).ToString()]);
             }
@@ -66,12 +66,23 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
         public IActionResult Detail(string id = "1")
         {
-            //string path = $"https://pokeapi.co/api/v2/pokemon/{id}/";
-            //Pokemon pokemon = APIRequest(path).ToObject<Pokemon>();
-
-            Pokemon pokemon = repository[id];
-            if (pokemon != null)
-                return View(pokemon);
+            PokeDetailViewModel pokeDetail = new PokeDetailViewModel();
+            pokeDetail.Pokemon = repository[id.ToLower()];
+            
+            if (pokeDetail.Pokemon != null)
+            {
+                pokeDetail.PokeMoves = new List<Models.PokemonMove.PokeMove>();
+                pokeDetail.Pokemon.moves.OrderBy(p => p.version_group_details.First().level_learned_at);
+                foreach(var move in pokeDetail.Pokemon.moves)
+                {
+                    if (move.version_group_details.FirstOrDefault().move_learn_method.name == "level-up")
+                    {
+                        pokeDetail.PokeMoves.Add(repository.PokeMove(move.move.name,move.move.url));
+                    }
+                    pokeDetail.PokeMoves.OrderBy(p=>p.);
+                }
+                return View(pokeDetail);
+            }  
             else
                 return View("NotFound404");
         }

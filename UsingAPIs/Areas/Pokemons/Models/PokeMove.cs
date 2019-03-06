@@ -125,7 +125,7 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonMove
 
     public class PastValue
     {
-        public int accuracy { get; set; }
+        public int? accuracy { get; set; }
         public object effect_chance { get; set; }
         public List<object> effect_entries { get; set; }
         public object power { get; set; }
@@ -153,7 +153,7 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonMove
 
     public class PokeMove
     {
-        public int accuracy { get; set; }
+        public int? accuracy { get; set; }
         public object contest_combos { get; set; }
         public ContestEffect contest_effect { get; set; }
         public ContestType contest_type { get; set; }
@@ -169,7 +169,7 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonMove
         public string name { get; set; }
         public List<Name> names { get; set; }
         public List<PastValue> past_values { get; set; }
-        public int power { get; set; }
+        public int? power { get; set; }
         public int pp { get; set; }
         public int priority { get; set; }
         public List<object> stat_changes { get; set; }

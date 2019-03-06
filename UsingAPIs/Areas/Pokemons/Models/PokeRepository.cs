@@ -4,115 +4,124 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using UsingAPIs.Areas.Pokemons.Models.PokemonEvolution;
+using UsingAPIs.Areas.Pokemons.Models.PokemonMove;
 using UsingAPIs.Controllers;
 
 namespace UsingAPIs.Areas.Pokemons.Models
 {
     public class PokeRepository : IPokeRepository
-    { 
+    {
         //PRIVATE
         private List<Pokemon> pokemons;
-        //private PokeList pokeList;
+        private List<PokeMove> pokeMoves;
+        private List<PokeEvolutionChain> evolutionChains;
 
         //PUBLIC
         public int PokeCount => 807;
-        //public IEnumerable<Pokemon> Pokemons => pokemons.Values;
         public Pokemon this[string name]
         {
             get
             {
+                bool isNew = false;
                 int id;
-                if(int.TryParse(name, out id))
+                if (int.TryParse(name, out id))
                 {
-                    Pokemon pokemon = pokemons.FirstOrDefault(p => p.id == id);
-                    if (pokemon != null)
+                    Pokemon pokemon = CheckGetRepo<Pokemon>(pokemons.FirstOrDefault(p => p.id == id), Pokemon.ApiName, id.ToString(), out isNew);
+                    if(isNew)
                     {
-                        return pokemon;
+                        pokemons.Add(pokemon);
                     }
-                    else
-                    {
-
-                        var result = GetPokemonAsync(id.ToString());
-                        if (result.Result != null)
-                        {
-                            pokemons.Add(result.Result);
-                            return pokemons.FirstOrDefault(p => p.id == id);
-                        }
-                        else
-                            return null;
-                    }
+                    return pokemon;
                 }
                 else
                 {
-                    Pokemon pokemon = pokemons.FirstOrDefault(p => p.name == name);
-                    if (pokemon != null)
+                    Pokemon pokemon = CheckGetRepo<Pokemon>(pokemons.FirstOrDefault(p => p.name == name), Pokemon.ApiName, name, out isNew);
+                    if (isNew)
                     {
-                        return pokemon;
+                        pokemons.Add(pokemon);
                     }
-                    else
-                    {
-                        var result = GetPokemonAsync(name);
-                        if (result.Result != null)
-                        {
-                            pokemons.Add(result.Result);
-                            return pokemons.FirstOrDefault(p => p.name == name);
-                        }
-                        else
-                            return null;
-                    }
+                    return pokemon;
                 }
 
             }
         }
 
+        public PokeMove PokeMove(string name, string path)
+        {
+            bool isNew = false;
+            PokeMove pokeMove = CheckGetRepo<PokeMove>(pokeMoves.FirstOrDefault(p => p.name == name), path, out isNew);
+            if (isNew)
+            {
+                pokeMoves.Add(pokeMove);
+            }
+            return pokeMove;   
+        }
+        
         //CONSTRUCTOR
         public PokeRepository()
         {
-            //pokeList = GetPokeListAsync($"https://pokeapi.co/api/v2/pokemon?offset=0&limit={PokeCount}").Result;
             pokemons = new List<Pokemon>();
-            //pokemons = GetAllAsync().Result;
-
+            pokeMoves = new List<PokeMove>();
+            evolutionChains = new List<PokeEvolutionChain>();
         }
 
         //METHODS
         /*
-        private async Task<PokeList> GetPokeListAsync(string path)
-        {
-            var client = new HttpClient();
-            var response = await client.GetAsync(path);
-
-            response.EnsureSuccessStatusCode();
-
-            var stringResult = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<PokeList>(stringResult);
-        }
-        */
-
         private async Task<Pokemon> GetPokemonAsync(string name)
         {
             var client = new HttpClient();
             var response = await client.GetAsync($"https://pokeapi.co/api/v2/pokemon/{name}");
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 var stringResult = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<Pokemon>(stringResult);
             }
             return null;
-            
+        }
+        */
 
-            /*
-            for (int i = 0; i < 807; i++)
+        private async Task<T> GetDataAsync<T>(string type, string id)
+        {
+            return await GetDataAsync<T>($"https://pokeapi.co/api/v2/{type}/{id}");
+        }
+        private async Task<T> GetDataAsync<T>(string path)
+        {
+            //GET DATA FROM API
+            var client = new HttpClient();
+            var response = await client.GetAsync(path);
+            if (response.IsSuccessStatusCode)
             {
-                //IRestResponse response = await client.ExecuteAsync(request)
-
-               // Pokemon pok = await ExtendedController.APIRequest($"https://pokeapi.co/api/v2/pokemon/{i + 1}").ToObject<Pokemon>();
-                list.Add(pok);
+                var stringResult = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<T>(stringResult);
             }
-            return list;
-            */
+            return default(T);
         }
 
+        private T CheckGetRepo<T>(T obj, string type, string id, out bool isNew)
+        {
+            isNew = false;
+            return CheckGetRepo<T>(obj, $"https://pokeapi.co/api/v2/{type}/{id}", out isNew);
+        }
 
-
+        private T CheckGetRepo<T>(T obj, string path, out bool isNew)
+        {
+            isNew = false;
+            if (obj != null)
+            {
+                return obj;
+            }
+            else
+            {
+                var result = GetDataAsync<T>(path);
+                if (result.Result != null)
+                {
+                    isNew = true;
+                    return result.Result;
+                }
+                else
+                    return default(T);
+            }
+        }
     }
 }

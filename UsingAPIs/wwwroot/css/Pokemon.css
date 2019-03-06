@@ -12,6 +12,10 @@
         margin-top: 30px;
     }
 
+    .pokediv img {
+        max-height: 102px;
+    }
+
 .pokelink {
     text-decoration: none;
     display: block;
@@ -28,9 +32,25 @@
     text-align: left;
 }
 
-.stat-table span{
+.stat-table span {
     margin-left: 10px;
 }
+
+.moves-table {
+    border: 0;
+}
+
+    .moves-table td {
+        border-top: 0 !important;
+        margin-top: 3px;
+        padding: 3px 7px 3px 7px !important;
+    }
+
+    .moves-table tr:first-child {
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    
+    }
 /* BADGES */
 
 .badge-normal {
