@@ -87,10 +87,26 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
                 //EVOLUTION
                 pokeDetail.EvolutionChain = repository.EvolutionChain(pokeDetail.PokeSpecies.evolution_chain.url);
+                pokeDetail.EvolutionChain.chain.evolves_to = GetEvoChain(pokeDetail.EvolutionChain.chain.evolves_to);
+
+                //VIEWBAGS
+                ViewBag.PokeCount = repository.PokeCount;
+
                 return View(pokeDetail);
             }  
             else
                 return View("NotFound404");
+        }
+
+        public List<Models.PokemonEvolution.EvolvesTo> GetEvoChain(List<Models.PokemonEvolution.EvolvesTo> evolvesTo)
+        {
+            foreach(var evo in evolvesTo)
+            {
+                evo.Pokemon = repository[evo.species.name];
+                if (evo.evolves_to.Count > 0)
+                    evo.evolves_to = GetEvoChain(evo.evolves_to);
+            }
+            return evolvesTo;
         }
     }
 }
