@@ -88,7 +88,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
                 //EVOLUTION
                 pokeDetail.EvolutionChain = repository.EvolutionChain(pokeDetail.PokeSpecies.evolution_chain.url);
                 pokeDetail.EvolutionChain.chain.evolves_to = GetEvoChain(pokeDetail.EvolutionChain.chain.evolves_to);
-
+                pokeDetail.EvolutionChain.chain.FirstPokemon = repository[pokeDetail.EvolutionChain.chain.species.name];
                 //VIEWBAGS
                 ViewBag.PokeCount = repository.PokeCount;
 

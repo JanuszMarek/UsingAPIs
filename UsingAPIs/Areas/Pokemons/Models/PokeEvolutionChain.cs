@@ -54,6 +54,7 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
         public List<EvolvesTo> evolves_to { get; set; }
         public bool is_baby { get; set; }
         public Species species { get; set; }
+        public Pokemon FirstPokemon { get; set; }
     }
 
     public class PokeEvolutionChain

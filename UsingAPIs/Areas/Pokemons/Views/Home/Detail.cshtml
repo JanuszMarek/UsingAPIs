@@ -1,8 +1,30 @@
 ﻿@model PokeDetailViewModel
 
+@using UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
+@using Microsoft.AspNetCore.Html
+
 @{
     ViewData["Title"] = "Detail";
 
+}
+
+@functions {
+public static IHtmlContent Repeat(IEnumerable<EvolvesTo> items, Func<dynamic, IHtmlContent> template)
+{
+    var html = new HtmlContentBuilder();
+
+    foreach (var item in items)
+    {
+
+        html.AppendHtml(template(item));
+        if (item.evolves_to.Count > 0)
+        {
+            html.AppendHtml(Repeat(item.evolves_to, template));
+        }
+    }
+
+    return html;
+}
 }
 
 
@@ -104,31 +126,31 @@
         </tr>
         <tr name="colorchange">
             <td>Capture Rate</td>
-            <td>@(String.Format("{0:0.00}%", (double)Model.PokeSpecies.capture_rate * 100 / 255))</td>
+            <td>@(String.Format("{0:0.00}%", (double)Model.PokeSpecies.capture_rate * (100.0 / 3.0) / 255))</td>
         </tr>
         <tr>
             <td>Gender Rate</td>
             <td>
                 <div class="col-xs-10 col-sm-8 col-xs-offset-1 col-sm-offset-2">
-                    @{ 
+                    @{
                         var percFem = (Model.PokeSpecies.gender_rate * 100 / 8);
                         var percMale = 100 - percFem;
-                        }
+                    }
                     @if (Model.PokeSpecies.gender_rate != -1)
                     {
-                    <div class="gender">
-                        @if (percMale > 0)
-                        {
-                            var str = percMale == 100 ? "10px" : "";
-                            <div style="width:@(percMale+1)%; border-radius:@str"><span>@percMale%</span></div>
-                        }
-                        @if (percFem > 0)
-                        {
-                            <span>@percFem%</span>
-                        }
+                        <div class="gender">
+                            @if (percMale > 0)
+                            {
+                                var str = percMale == 100 ? "10px" : "";
+                                <div style="width:@(percMale+1)%; border-radius:@str"><span>@percMale%</span></div>
+                            }
+                            @if (percFem > 0)
+                            {
+                                <span>@percFem%</span>
+                            }
 
-                    </div>
-                   
+                        </div>
+
                     }
                     else
                     {
@@ -172,17 +194,28 @@
 </div>
 <div class="clearfix"></div>
 
+<!-- EVOLUTIONS -->
 
+<div class="text-center col-sm-12">
+    <div class="panel panel-default panel-collapse">
+        <div class="panel-heading" name="colorchange">Evolutions</div>
 
+        <div class="panel-body nopadding">
 
-
+                <partial name="_PokeTile" model=@Model.EvolutionChain.chain.FirstPokemon />
+                
+            @Repeat(Model.EvolutionChain.chain.evolves_to, @<div><partial name="_PokeTile" model=@item.Pokemon /></div>)
+        </div>
+    </div>
+</div>
+<div class="clearfix"></div>
 
 @section Scripts
     {
     <script>
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
             setColor();
+            $('[data-toggle="tooltip"]').tooltip();
         });
 
         function setColor() {
