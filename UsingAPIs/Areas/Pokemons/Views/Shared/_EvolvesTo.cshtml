@@ -1,0 +1,12 @@
+﻿@model UsingAPIs.Areas.Pokemons.Models.PokemonEvolution.EvolvesTo
+
+@{ }
+
+<div class="row nopadding">
+    <div class="col-xs-5 evodetail ">
+        <partial name="_EvolutionDetail" model="@Model.evolution_details.FirstOrDefault()" />
+    </div>
+    <div class="col-xs-7 nopadding">
+        <partial name="_PokeTile" model="@Model.Pokemon" />
+    </div>
+</div>

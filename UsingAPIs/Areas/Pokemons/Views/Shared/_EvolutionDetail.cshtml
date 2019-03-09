@@ -4,7 +4,82 @@
 
 @if (Model != null)
 {
-    <div>
-        <div class="glyphicon glyphicon-arrow-right"></div>
-    </div>
+    <i class="glyphicon glyphicon-arrow-right"></i>
+    <div>@Model.trigger.name</div>
+
+    @if (Model.item != null)
+    {
+        <div>@Model.item.name.FirstCharToUpper()</div>
+    }
+
+    @if (Model.min_level != null)
+    {
+        <div>Level: @Model.min_level</div>
+    }
+
+    @if (Model.trade_species != null)
+    {
+        <div>Trade for <a asp-action="Detail" asp-route-id="@Model.trade_species.name"> @Model.trade_species.name.FirstCharToUpper()</a></div>
+    }
+
+    @if (Model.min_happiness != null)
+    {
+        <div>Happines: @Model.min_happiness</div>
+    }
+
+    @if (Model.min_beauty != null)
+    {
+        <div>Beauty: @Model.min_beauty</div>
+    }
+
+    @if (Model.held_item != null)
+    {
+        <div>Must hold @Model.held_item.name.FirstCharToUpper()</div>
+    }
+
+    @if (!String.IsNullOrEmpty(Model.time_of_day))
+    {
+        <div>Time of day: @Model.time_of_day</div>
+    }
+
+    @if (Model.location != null)
+    {
+        <div>Location: @Model.location.name.FirstCharToUpper()</div>
+    }
+
+    @if (Model.min_affection != null)
+    {
+        <div>Affection: @Model.min_affection</div>
+    }
+
+    @if (Model.known_move != null)
+    {
+        <div>Known move: @Model.known_move.name.FirstCharToUpper()</div>
+    }
+
+    @if (Model.known_move_type != null)
+    {
+        <div>Known move-type: @Model.known_move_type.name.FirstCharToUpper()</div>
+    }
+
+    @if (Model.gender != null)
+    {
+        <div>
+            Only @(Model.gender == 1 ? "female" : "male")
+        </div>
+    }
+
+    @if (Model.relative_physical_stats != null)
+    {
+        <div>
+            Stats:
+            @switch (Model.relative_physical_stats)
+            {
+                case 1:<span>Attack < Defense</span>; break;
+                case -1: <span>Attack > Defense</span>; break;
+                case 0: <span>Attack = Defense</span>; break;
+                case null: break;
+            }
+        </div>
+    }
 }

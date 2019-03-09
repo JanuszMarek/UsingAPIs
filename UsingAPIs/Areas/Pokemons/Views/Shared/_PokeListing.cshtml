@@ -1,10 +1,11 @@
 ﻿@model PokeListViewModel
 <!--for (int i = (Model.Pagination.Page - 1) * Model.Pagination.PageSize; i < ((Model.Pagination.Page - 1) * Model.Pagination.PageSize) + Model.Pagination.PageSize; i++)-->
-@foreach(var item in Model.Pokemons)
+@foreach (var item in Model.Pokemons)
 {
     //var item = Model.Pokemons.ElementAt(i);
-    <partial name="_PokeTile" model=item />
-
+    <div class="col-sm-4 container-fluid nopadding">
+        <partial name="_PokeTile" model=item />
+    </div>
 }
 <div class="clearfix"></div>
 

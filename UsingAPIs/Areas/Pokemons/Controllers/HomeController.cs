@@ -87,8 +87,10 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
 
                 //EVOLUTION
                 pokeDetail.EvolutionChain = repository.EvolutionChain(pokeDetail.PokeSpecies.evolution_chain.url);
+
                 pokeDetail.EvolutionChain.chain.evolves_to = GetEvoChain(pokeDetail.EvolutionChain.chain.evolves_to);
                 pokeDetail.EvolutionChain.chain.FirstPokemon = repository[pokeDetail.EvolutionChain.chain.species.name];
+
                 //VIEWBAGS
                 ViewBag.PokeCount = repository.PokeCount;
 
@@ -102,6 +104,10 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
         {
             foreach(var evo in evolvesTo)
             {
+                //fix one Pokemon name
+                if (evo.species.name == "wormadam")
+                    evo.species.name = "wormadam-plant";
+
                 evo.Pokemon = repository[evo.species.name];
                 if (evo.evolves_to.Count > 0)
                     evo.evolves_to = GetEvoChain(evo.evolves_to);

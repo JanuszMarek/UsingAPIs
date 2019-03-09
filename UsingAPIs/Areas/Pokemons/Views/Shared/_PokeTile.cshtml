@@ -1,22 +1,20 @@
 ﻿@model Pokemon
 
-<a asp-action="Detail" asp-route-id="@Model.name" class="pokelink">
-    <div class="col-sm-4 nopadding">
-        <div class="pokediv container-fluid nopadding">
-
-            <div class="col-xs-4 nopadding">
-                <img src="@Model.sprites.front_default" name="page" class="img-responsive" />
-            </div>
-
-            <div class="col-xs-8 centerhor">
-                @Model.name.FirstCharToUpper()
-                <span>
-                    @foreach (var type in Model.types)
-                    {
-                        <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
-                    }
-                </span>
-            </div>
+<div class="pokediv nopadding">
+    <a asp-action="Detail" asp-route-id="@Model.name" class="pokelink">
+        <div class="col-xs-4 nopadding">
+            <img src="@Model.sprites.front_default" name="page" class="img-responsive" />
         </div>
-    </div>
-</a>
+
+        <div class="col-xs-8 centerhor">
+            @Model.name.FirstCharToUpper()
+            <span>
+                @foreach (var type in Model.types)
+                {
+                    <span badge-type="@type.type.name">@type.type.name.FirstCharToUpper()</span>
+                }
+            </span>
+        </div>
+    </a>
+</div>
+

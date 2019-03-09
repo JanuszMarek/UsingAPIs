@@ -9,22 +9,44 @@
 }
 
 @functions {
-public static IHtmlContent Repeat(IEnumerable<EvolvesTo> items, Func<dynamic, IHtmlContent> template)
-{
-    var html = new HtmlContentBuilder();
-
-    foreach (var item in items)
+    public static IHtmlContent Repeat(IEnumerable<EvolvesTo> items, Func<dynamic, IHtmlContent> template)
     {
+        var html = new HtmlContentBuilder();
 
-        html.AppendHtml(template(item));
-        if (item.evolves_to.Count > 0)
+        var table = new TagBuilder("table");
+        var tr = new TagBuilder("tr");
+        var td = new TagBuilder("td");
+
+        html.AppendHtml(td.RenderStartTag());
+
+        if (items.Count() > 1)
         {
-            html.AppendHtml(Repeat(item.evolves_to, template));
+            html.AppendHtml(table.RenderStartTag());
+            html.AppendHtml(tr.RenderStartTag());
+            html.AppendHtml(td.RenderStartTag());
         }
-    }
+        
 
-    return html;
-}
+        foreach (var item in items)
+        {
+            html.AppendHtml(template(item));
+            if (item.evolves_to.Count > 0)
+            {
+                html.AppendHtml(Repeat(item.evolves_to, template));
+            }
+        }
+
+
+
+        if (items.Count() > 1)
+        {
+            html.AppendHtml(td.RenderEndTag());
+            html.AppendHtml(tr.RenderEndTag());
+            html.AppendHtml(table.RenderEndTag());
+        }
+        html.AppendHtml(td.RenderEndTag());
+        return html;
+    }
 }
 
 
@@ -198,13 +220,19 @@ public static IHtmlContent Repeat(IEnumerable<EvolvesTo> items, Func<dynamic, IH
 
 <div class="text-center col-sm-12">
     <div class="panel panel-default panel-collapse">
-        <div class="panel-heading" name="colorchange">Evolutions</div>
+        <div class="panel-heading" name="colorchange">Evolutions @Model.EvolutionChain.id</div>
 
         <div class="panel-body nopadding">
-
-                <partial name="_PokeTile" model=@Model.EvolutionChain.chain.FirstPokemon />
-                
-            @Repeat(Model.EvolutionChain.chain.evolves_to, @<div><partial name="_PokeTile" model=@item.Pokemon /></div>)
+            <table class="table table-responsive evo-table">
+                <tr>
+                    <td>
+                        <partial name="_PokeTile" model=@Model.EvolutionChain.chain.FirstPokemon />
+                    </td>
+                    
+                    @Repeat(Model.EvolutionChain.chain.evolves_to, @<partial name="_EvolvesTo" model=@item />)
+                    
+                </tr>
+            </table>
         </div>
     </div>
 </div>

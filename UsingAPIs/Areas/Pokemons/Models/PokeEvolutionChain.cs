@@ -11,14 +11,44 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
         public string url { get; set; }
     }
 
+    public class Item
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class Location
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class KnownMove
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class KnownMoveType
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class TradeFor
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
     public class EvolutionDetail
     {
-        public object gender { get; set; }
-        public object held_item { get; set; }
-        public object item { get; set; }
-        public object known_move { get; set; }
-        public object known_move_type { get; set; }
-        public object location { get; set; }
+        public int? gender { get; set; }
+        public Item held_item { get; set; }
+        public Item item { get; set; }
+        public KnownMove known_move { get; set; }
+        public KnownMoveType known_move_type { get; set; }
+        public Location location { get; set; }
         public object min_affection { get; set; }
         public object min_beauty { get; set; }
         public object min_happiness { get; set; }
@@ -26,9 +56,9 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
         public bool needs_overworld_rain { get; set; }
         public object party_species { get; set; }
         public object party_type { get; set; }
-        public object relative_physical_stats { get; set; }
+        public int? relative_physical_stats { get; set; }
         public string time_of_day { get; set; }
-        public object trade_species { get; set; }
+        public TradeFor trade_species { get; set; }
         public Trigger trigger { get; set; }
         public bool turn_upside_down { get; set; }
     }
