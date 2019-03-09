@@ -1,4 +1,4 @@
-# Using APIs
+﻿# Using APIs
 > This project were created to learn to use third-part APIs in ASP.NET Core.
 
 ## Table of contents
@@ -17,7 +17,7 @@ Project use three third-part APIs like PokéAPI, GIPHY API and YouTube Data API.
 <br>Thanks to YouTube Data API developers can add YouTube functionality to their sites. 
 <br><br>
 GIPHY and YouTube sections in my web site provides search bar for search a content from APIs e.g. user can search for "funny cats" and he will get search results of GIFs with cats (in GIPHY section) and videos with cats (in YouTube section) which are linked to YouTube page with this videos.
-<br>Pokemon section contain list of all pokemons (with filtration in the future) and details page of Pokemon with data from API.
+<br>Pokemon section contain list of all pokemons and details page of Pokemon with data from API.
 In the future I want to add 4th API for Google Calendar with reading events of current day and possibility to add new events.
 
 ## Technologies
@@ -30,11 +30,10 @@ In the future I want to add 4th API for Google Calendar with reading events of c
 Done:
 - GIPHY - searching for user phrase using API
 - YouTube - searching for user phrase using API
-- Pokemon - list with Pokemons using API
+- Pokemon - list with Pokemons using API, detail view of Pokemon with his skills, moves, evolution chain, etc.
 - pagination in each section
 
 To do:
-- Pokemon - filtration of Pokemons, detail view of Pokemon
 - add new API - Google Calendar with reading events of current day and possibility to add new events.
 
 ## Solved problems
