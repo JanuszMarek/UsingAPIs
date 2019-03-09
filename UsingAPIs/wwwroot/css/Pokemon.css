@@ -36,6 +36,10 @@
     margin-left: 10px;
 }
 
+.moves {
+    min-width: 340px;
+}
+
 .moves-table {
     border: 0;
 }
@@ -71,7 +75,13 @@ h4 span a {
     font-size: 20px;
 }
 
+.evo-table {
+    margin-bottom: 0;
+}
 
+.evo-table td {
+    padding-top: 0 !important;
+}
 
 /* BADGES */
 .badge-normal {
@@ -182,6 +192,25 @@ h4 span a {
         z-index: 100000;
     }
 
+.evolutions {
+    min-width: 905px;
+}
+
+@media screen and (max-width: 420px) {
+
+    .box {
+        padding: 0;
+        min-width: 305px;
+    }
+
+    .evolutions {
+        padding: 0;
+    }
+
+    .evolutions td {
+        padding: 0 !important;
+    }
+}
 
 @media screen and (max-width: 320px) {
     /* Hide captions */
@@ -200,4 +229,11 @@ h4 span a {
             left: -30px;
             z-index: 100000;
         }
+
+    .box {
+        min-width: 250px;
+    }
+
+
 }
+

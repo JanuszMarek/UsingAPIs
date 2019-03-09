@@ -5,7 +5,7 @@
 @if (Model != null)
 {
     <i class="glyphicon glyphicon-arrow-right"></i>
-    <div>@Model.trigger.name</div>
+    <div><b>@(Model.trigger.name == "shed" ? "free space in party" : Model.trigger.name.FirstCharToUpper() )</b></div>
 
     @if (Model.item != null)
     {
@@ -20,6 +20,16 @@
     @if (Model.trade_species != null)
     {
         <div>Trade for <a asp-action="Detail" asp-route-id="@Model.trade_species.name"> @Model.trade_species.name.FirstCharToUpper()</a></div>
+    }
+
+    @if (Model.party_species != null)
+    {
+        <div>Needs <a asp-action="Detail" asp-route-id="@Model.party_species.name"> @Model.party_species.name.FirstCharToUpper()</a> in team</div>
+    }
+
+    @if (Model.party_type != null)
+    {
+        <div>Needs <span badge-type="@Model.party_type.name"> @Model.party_type.name.FirstCharToUpper()</span> Pokemon in team</div>
     }
 
     @if (Model.min_happiness != null)
@@ -81,5 +91,15 @@
                 case null: break;
             }
         </div>
+    }
+
+    @if (Model.turn_upside_down == true)
+    {
+        <div>Needs upside down</div>
+    }
+
+    @if (Model.needs_overworld_rain == true)
+    {
+        <div>Needs overworld rain</div>
     }
 }

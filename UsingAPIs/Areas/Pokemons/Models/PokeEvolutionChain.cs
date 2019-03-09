@@ -41,6 +41,18 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
         public string url { get; set; }
     }
 
+    public class PartySpecies
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class PartyType
+    {
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
     public class EvolutionDetail
     {
         public int? gender { get; set; }
@@ -54,8 +66,8 @@ namespace UsingAPIs.Areas.Pokemons.Models.PokemonEvolution
         public object min_happiness { get; set; }
         public object min_level { get; set; }
         public bool needs_overworld_rain { get; set; }
-        public object party_species { get; set; }
-        public object party_type { get; set; }
+        public PartySpecies party_species { get; set; }
+        public PartyType party_type { get; set; }
         public int? relative_physical_stats { get; set; }
         public string time_of_day { get; set; }
         public TradeFor trade_species { get; set; }
