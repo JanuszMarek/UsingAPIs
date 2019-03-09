@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UsingAPIs.Areas.Pokemons.Models.PokemonEvolution;
-using UsingAPIs.Areas.Pokemons.Models.PokemonMove;
-using UsingAPIs.Areas.Pokemons.Models.PokemonSpecies;
+
 
 namespace UsingAPIs.Areas.Pokemons.Models
 {

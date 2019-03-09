@@ -71,7 +71,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
             
             if (pokeDetail.Pokemon != null)
             {
-                pokeDetail.PokeMoves = new List<Models.PokemonMove.PokeMove>();
+                pokeDetail.PokeMoves = new List<PokeMove>();
                 //MOVES
                 pokeDetail.Pokemon.moves.OrderBy(p => p.version_group_details.First().level_learned_at);
                 foreach(var move in pokeDetail.Pokemon.moves)
@@ -100,7 +100,7 @@ namespace UsingAPIs.Areas.Pokemons.Controllers
                 return View("NotFound404");
         }
 
-        public List<Models.PokemonEvolution.EvolvesTo> GetEvoChain(List<Models.PokemonEvolution.EvolvesTo> evolvesTo)
+        public List<EvolvesTo> GetEvoChain(List<EvolvesTo> evolvesTo)
         {
             foreach(var evo in evolvesTo)
             {

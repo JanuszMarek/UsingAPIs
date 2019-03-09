@@ -5,72 +5,54 @@ using System.Threading.Tasks;
 
 namespace UsingAPIs.Areas.Pokemons.Models
 {
-    public class Ability2
+    public class NameUrl
     {
         public string name { get; set; }
         public string url { get; set; }
+    }
+
+    public class JustURL
+    {
+        public string url { get; set; }
+    }
+
+    public class Name
+    {
+        public NameUrl language { get; set; }
+        public string name { get; set; }
+    }
+
+    public class FlavorTextEntry
+    {
+        public string flavor_text { get; set; }
+        public NameUrl language { get; set; }
+        public NameUrl version_group { get; set; }
     }
 
     public class Ability
     {
-        public Ability2 ability { get; set; }
+        public NameUrl ability { get; set; }
         public bool is_hidden { get; set; }
         public int slot { get; set; }
-    }
-
-    public class Form
-    {
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
-    public class Version
-    {
-        public string name { get; set; }
-        public string url { get; set; }
     }
 
     public class GameIndice
     {
         public int game_index { get; set; }
-        public Version version { get; set; }
-    }
-
-    public class Move2
-    {
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
-    public class MoveLearnMethod
-    {
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
-    public class VersionGroup
-    {
-        public string name { get; set; }
-        public string url { get; set; }
+        public NameUrl version { get; set; }
     }
 
     public class VersionGroupDetail
     {
         public int level_learned_at { get; set; }
-        public MoveLearnMethod move_learn_method { get; set; }
-        public VersionGroup version_group { get; set; }
+        public NameUrl move_learn_method { get; set; }
+        public NameUrl version_group { get; set; }
     }
 
     public class Move
     {
-        public Move2 move { get; set; }
+        public NameUrl move { get; set; }
         public List<VersionGroupDetail> version_group_details { get; set; }
-    }
-
-    public class Species
-    {
-        public string name { get; set; }
-        public string url { get; set; }
     }
 
     public class Sprites
@@ -85,36 +67,24 @@ namespace UsingAPIs.Areas.Pokemons.Models
         public string front_shiny_female { get; set; }
     }
 
-    public class Stat2
-    {
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
     public class Stat
     {
         public int base_stat { get; set; }
         public int effort { get; set; }
-        public Stat2 stat { get; set; }
-    }
-
-    public class Type2
-    {
-        public string name { get; set; }
-        public string url { get; set; }
+        public NameUrl stat { get; set; }
     }
 
     public class Type
     {
         public int slot { get; set; }
-        public Type2 type { get; set; }
+        public NameUrl type { get; set; }
     }
 
     public class Pokemon
     {
         public List<Ability> abilities { get; set; }
         public int base_experience { get; set; }
-        public List<Form> forms { get; set; }
+        public List<NameUrl> forms { get; set; }
         public List<GameIndice> game_indices { get; set; }
         public int height { get; set; }
         public List<object> held_items { get; set; }
@@ -124,7 +94,7 @@ namespace UsingAPIs.Areas.Pokemons.Models
         public List<Move> moves { get; set; }
         public string name { get; set; }
         public int order { get; set; }
-        public Species species { get; set; }
+        public NameUrl species { get; set; }
         public Sprites sprites { get; set; }
         public List<Stat> stats { get; set; }
         public List<Type> types { get; set; }

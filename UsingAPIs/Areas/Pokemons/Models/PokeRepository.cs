@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using UsingAPIs.Areas.Pokemons.Models.PokemonEvolution;
-using UsingAPIs.Areas.Pokemons.Models.PokemonMove;
-using UsingAPIs.Areas.Pokemons.Models.PokemonSpecies;
 using UsingAPIs.Controllers;
 
 namespace UsingAPIs.Areas.Pokemons.Models
